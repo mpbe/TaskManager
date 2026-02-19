@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{%block title%}{%endblock%}</title>
+</head>
+<body>
+
+    <nav>
+        <ul>
+<!--            change these later to url_for... when blueprints set up-->
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+        </ul>
+    </nav>
+
+    {%block content%}{%endblock%}
+</body>
+</html>
