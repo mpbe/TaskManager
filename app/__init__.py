@@ -14,9 +14,9 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
 
-    #TODO import models here for db tables when created
-    #TODO register routes here when created
-    #TODO register the blueprints here when routes are created - and add prefixes here
+    #import models here for db tables when created
+    #register routes here when created
+    #register the blueprints here when routes are created - and add prefixes here
 
     #uncomment this when you have tables to make
     # with app.app_context():
