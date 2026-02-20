@@ -3,5 +3,20 @@
 {%block title%}Login{%endblock%}
 
 {%block content%}
+
 <h1>Login</h1>
+
+<form action="{{url_for('auth.login')}}" method="post">
+
+    <label for="username">Username</label>
+    <input name="username" id="username" type="text" placeholder="Enter username...">
+
+    <label for="password">Password</label>
+    <input name="password" id="password" type="password" placeholder="Enter password...">
+
+    <button type="submit">Submit</button>
+</form>
+
+<a href="{{url_for('auth.register')}}">Need an account? Register here</a>
+
 {%endblock%}
