@@ -16,11 +16,28 @@ class LoginUserForm(BaseForm):
 
         self.username = form.get("username", "").strip()
         if not self.username:
-            self.errors["username"] = "username must not be blank"
+            self.errors["login_username"] = "username must not be blank"
 
         self.password = form.get("password", "").strip()
         if not self.password:
-            self.errors["password"] = "password must not be blank"
+            self.errors["login_password"] = "password must not be blank"
+
+
+class RegisterUserForm(BaseForm):
+    def __init__(self, form):
+        super().__init__()
+
+        self.username = form.get("username", "").strip()
+        if not self.username:
+            self.errors["register_username"] = "username must not be blank"
+
+        self.email = form.get("email", "").strip()
+        if not self.email:
+            self.errors["register_email"] = "email must not be blank"
+
+        self.password = form.get("password", "").strip()
+        if not self.password:
+            self.errors["register_password"] = "password must not be blank"
 
 
 

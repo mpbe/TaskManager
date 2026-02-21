@@ -9,18 +9,12 @@ simple validation such as if the field is empty.
 
 this is a base form that the others can inherit from
 
-i am aware that this does not need field etc as it is not a dataclass, but i wanted
-it to conform to same style as my results objects i will create later
 """
 
-from dataclasses import field
-
-
-class BaseForm():
+class BaseForm:
 
     def __init__(self):
-        #ensures a new dict is created for each form object that is created
-        self.errors: dict[str, str] = field(default_factory=dict)
+        self.errors = {}
 
     @property
     def success(self):
