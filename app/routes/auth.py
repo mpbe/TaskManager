@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-
 from app.forms.auth_forms import LoginUserForm, RegisterUserForm
+from app.services.auth_service import authenticate_user
+from flask_login import login_user
 
 """
 routes related to logging in and registering users
@@ -20,6 +21,16 @@ def login():
                 flash(error, "error")
             return redirect(url_for("auth.login"))
 
+        result = authenticate_user(username=form.username, password=form.password)
+
+        if not result.success:
+            for error in result.errors.values():
+                flash(error, "error")
+            return redirect(url_for("auth.login"))
+
+        login_user(result.user)
+        return redirect(url_for("main.index"))
+
 
     return render_template("login.html")
 
@@ -32,6 +43,6 @@ def register():
         if not form.success:
             for error in form.errors.values():
                 flash(error, "error")
-            return redirect(url_for("auth.login"))
-
+            return redirect(url_for("auth.register"))
+    #change this later
     return render_template("register.html")

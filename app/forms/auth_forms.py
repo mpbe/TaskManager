@@ -38,9 +38,3 @@ class RegisterUserForm(BaseForm):
         self.password = form.get("password", "").strip()
         if not self.password:
             self.errors["password"] = "password must not be blank"
-
-
-
-
-
-
