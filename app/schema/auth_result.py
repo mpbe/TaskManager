@@ -5,7 +5,7 @@ on a success will be assigned a User. this will be done in the service layer
 """
 
 from dataclasses import dataclass
-from app import User
+from app.models import User
 from app.schema.base_result import BaseResult
 
 @dataclass

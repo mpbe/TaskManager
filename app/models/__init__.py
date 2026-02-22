@@ -1,4 +1,4 @@
-from app import login_manager
+from app.extensions import login_manager
 from app.models.user import User
 
 
