@@ -14,10 +14,12 @@ def authenticate_user(username: str, password: str):
     user = User.query.filter_by(username=username).first()
 
     if not user:
-        result.errors["username"] = "user not in database "
+        result.errors["username"] = "user not in database"
+        return result
 
     if not check_password_hash(user.hashed_password, password):
         result.errors["password"] = "password incorrect"
+        return result
 
     result.user = user
     return result

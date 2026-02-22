@@ -53,6 +53,7 @@ def register():
                 flash(error, "error")
             return redirect(url_for("auth.register"))
 
+        login_user(result.user)
         #change
         return redirect(url_for("main.index"))
 
