@@ -7,12 +7,20 @@
 <body>
 
     <nav>
+
+        {%if current_user.is_authenticated%}
         <ul>
-<!--            change these later to url_for... when blueprints set up-->
+            <li><a href="{{url_for('main.index')}}">Home</a></li>
+            <li><a href="{{url_for('tasks.tasks')}}">Tasks</a></li>
+            <li><a href="{{url_for('auth.login')}}">Logout</a></li>
+        </ul>
+        {%else%}
+        <ul>
             <li><a href="{{url_for('main.index')}}">Home</a></li>
             <li><a href="{{url_for('auth.login')}}">Login</a></li>
             <li><a href="{{url_for('auth.register')}}">Register</a></li>
         </ul>
+        {%endif%}
     </nav>
 
     {%block content%}{%endblock%}

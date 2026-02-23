@@ -1,6 +1,7 @@
 from flask import Flask
 from app.routes.auth import auth_bp
 from app.routes.main import main_bp
+from app.routes.tasks import tasks_bp
 from config import Config
 from app.extensions import db, login_manager
 from app.models import User
@@ -22,6 +23,7 @@ def create_app():
 
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(tasks_bp, url_prefix="/tasks")
     #import models here for db tables when created
     #register routes here when created
     #register the blueprints here when routes are created - and add prefixes here
