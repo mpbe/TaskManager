@@ -2,6 +2,7 @@ from app.extensions import db
 from app.models import User
 from app.schema.auth_result import LoginResult
 from werkzeug.security import generate_password_hash, check_password_hash
+from email_validator import validate_email, EmailNotValidError
 
 """
 service for auth, where more validation is performed and any queries/commits to the database
@@ -38,7 +39,8 @@ def register_user(username: str, email: str, password: str):
     if len(email) > 100:
         result.errors["email_length"] = "email cannot be longer than 100 characters"
 
-    #validate email format
+    if not is_valid_email(email=email):
+        result.errors["email-format"] = "email is in incorrect format"
 
     if len(password) < 4:
         result.errors["password"] = "password cannot be shorter than 4 characters"
@@ -68,3 +70,10 @@ def register_user(username: str, email: str, password: str):
     return result
 
 
+def is_valid_email(email: str):
+
+    try:
+        validate_email(email)
+        return True
+    except EmailNotValidError:
+        return False
