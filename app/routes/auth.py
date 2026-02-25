@@ -29,8 +29,7 @@ def login():
             return redirect(url_for("auth.login"))
 
         login_user(result.user)
-        #change
-        return redirect(url_for("main.index"))
+        return redirect(url_for("tasks.tasks"))
 
 
     return render_template("login.html")
@@ -54,8 +53,6 @@ def register():
             return redirect(url_for("auth.register"))
 
         login_user(result.user)
-        #change
-        return redirect(url_for("main.index"))
+        return redirect(url_for("tasks.tasks"))
 
-    #change this later
     return render_template("register.html")

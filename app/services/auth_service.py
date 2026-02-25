@@ -1,6 +1,6 @@
 from app.extensions import db
 from app.models import User
-from app.schema.auth_result import LoginResult
+from app.schema.auth_result import LoginResult, RegisterResult
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_validator import validate_email, EmailNotValidError
 
@@ -28,7 +28,15 @@ def authenticate_user(username: str, password: str):
 
 def register_user(username: str, email: str, password: str):
 
-    result = LoginResult()
+    result = RegisterResult()
+
+    if User.query.filter_by(username=username).first():
+        result.errors["username"] = "user already exists in database"
+        return result
+
+    if User.query.filter_by(email=email).first():
+        result.errors["email"] = "email already exists in database"
+        return result
 
     if len(username) < 4:
         result.errors["username_length"] = "username cannot be less than 4 characters"
@@ -47,12 +55,6 @@ def register_user(username: str, email: str, password: str):
 
     if len(password) > 200:
         result.errors["password"] = "password cannot be longer than 200 characters"
-
-    if User.query.filter_by(username=username).first():
-        result.errors["username"] = "user already exists in database"
-
-    if User.query.filter_by(email=email).first():
-        result.errors["email"] = "email already exists in database"
 
     if not result.success:
         return result
@@ -73,7 +75,7 @@ def register_user(username: str, email: str, password: str):
 def is_valid_email(email: str):
 
     try:
-        validate_email(email)
+        validate_email(email, check_deliverability=False)
         return True
     except EmailNotValidError:
         return False
