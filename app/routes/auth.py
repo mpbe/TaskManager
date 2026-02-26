@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from app.forms.auth_forms import LoginUserForm, RegisterUserForm
 from app.services.auth_service import authenticate_user, register_user
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 
 """
 routes related to logging in and registering users
@@ -56,3 +56,9 @@ def register():
         return redirect(url_for("tasks.tasks"))
 
     return render_template("register.html")
+
+@auth_bp.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("auth.login"))

@@ -82,5 +82,13 @@ def test_register_duplicate_username(client):
     assert b"user already exists in database" in response.data
 
 
+def test_logout_user_success(client):
 
-# logout works
+    client.post("/auth/register", data={
+        "username": "test",
+        "email": "test@test.com",
+        "password": "test"
+    })
+
+    response = client.get("/auth/logout", follow_redirects=True)
+    assert b"Login" in response.data
