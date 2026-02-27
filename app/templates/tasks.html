@@ -6,4 +6,5 @@
 
 {%block content%}
 <h1>Task List for {{current_user.username}}</h1>
+<a href="{{url_for('auth.update_password')}}">Update password?</a>
 {%endblock%}
