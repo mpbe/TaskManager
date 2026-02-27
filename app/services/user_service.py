@@ -2,13 +2,18 @@ from app.extensions import db
 from app.models import User
 from werkzeug.security import generate_password_hash
 
+from app.schema.auth_result import UpdatePasswordResult
+
 """
 this is the user service, where i have some methods to perform simple CRUD operations
 """
 
+#note: this method is for my use only, i would never put this in an actual application!
 def list_all_users():
     return [
-            {"username": user.username,
+            {
+             "id": user.id,
+             "username": user.username,
              "email": user.email,
              "password hash": user.hashed_password
             }
@@ -30,13 +35,15 @@ def delete_user(user_id: int):
     return True
 
 
-def update_password(user_id: int, password: str):
+def update_user_password(user_id: int, password: str):
     user = get_user_by_id(user_id)
 
     if not user:
-        return False
+        return UpdatePasswordResult(errors= {"error": "user does not exist"})
+
+    if len(password) < 4:
+        return UpdatePasswordResult(errors= {"error": "password cannot be shorter than 4 characters"})
 
     user.hashed_password = generate_password_hash(password)
-    db.session.add(user)
     db.session.commit()
-    return True
+    return UpdatePasswordResult()

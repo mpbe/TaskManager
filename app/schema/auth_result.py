@@ -16,3 +16,7 @@ class LoginResult(BaseResult):
 @dataclass
 class RegisterResult(BaseResult):
    user: User | None = None
+
+
+class UpdatePasswordResult(BaseResult):
+    pass
