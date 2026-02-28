@@ -92,3 +92,20 @@ def test_logout_user_success(client):
 
     response = client.get("/auth/logout", follow_redirects=True)
     assert b"Login" in response.data
+
+
+def test_update_password_success(client):
+
+    client.post("/auth/register", data={
+        "username": "user",
+        "email": "test@test.com",
+        "password": "pass"
+    })
+
+    client.post("/auth/update-password", data={
+        "old_password": "pass",
+        "new_password": "newpass",
+        "confirm_password": "newpass"
+    }, follow_redirects=True)
+
+    assert b"successfully updated!"

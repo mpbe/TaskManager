@@ -87,7 +87,10 @@ def update_password():
                 flash(error, "error")
             return redirect(url_for("auth.update_password"))
 
-        result = update_user_password(user_id=current_user.id, password=form.password)
+        result = update_user_password(user_id=current_user.id,
+                                      old_password=form.old_password,
+                                      new_password=form.new_password,
+                                      confirm_password=form.confirm_password)
 
         if not result.success:
             for error in result.errors.values():

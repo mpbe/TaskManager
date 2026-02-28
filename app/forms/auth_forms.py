@@ -44,8 +44,16 @@ class UpdatePasswordForm(BaseForm):
     def __init__(self, form):
         super().__init__()
 
-        self.password = form.get("password", "").strip()
-        if not self.password:
-            self.errors["password"] = "password cannot be blank"
+        self.old_password = form.get("old_password", "").strip()
+        if not self.old_password:
+            self.errors["old_password"] = "old password cannot be blank"
+
+        self.new_password = form.get("new_password", "").strip()
+        if not self.new_password:
+            self.errors["new_password"] = "new password cannot be blank"
+
+        self.confirm_password = form.get("confirm_password", "").strip()
+        if not self.confirm_password:
+            self.errors["confirm_password"] = "confirm password cannot be blank"
 
 
