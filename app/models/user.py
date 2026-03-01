@@ -11,3 +11,9 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(100), nullable=False, unique=True)
     email = db.Column(db.String(100), nullable=False, unique=True)
     hashed_password = db.Column(db.String(200), nullable=False)
+
+    tasks=db.relationship(
+        "Task",
+        backref="user",
+        cascade="all, delete-orphan"
+    )
