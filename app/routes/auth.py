@@ -100,4 +100,4 @@ def update_password():
         flash("successfully updated!", "success")
         return redirect(url_for("tasks.tasks"))
 
-    return render_template("tasks.html")
+    return render_template("update-password.html")
