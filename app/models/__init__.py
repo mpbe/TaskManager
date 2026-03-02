@@ -1,5 +1,8 @@
 from app.extensions import login_manager
 from app.models.user import User
+from app.models.task import Task
+from app.models.status import Status
+from app.models.priority import Priority
 
 
 """
