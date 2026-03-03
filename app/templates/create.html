@@ -1,0 +1,70 @@
+{%extends "base.html"%}
+
+{%block title%}Create Task{%endblock%}
+
+{%include "partials/form_errors.html"%}
+
+{%block content%}
+
+<div class="flex justify-center items-center min-h-[70vh]">
+    <div class="rounded-lg max-w-md bg-white p-8 w-full max-w-md shadow-lg">
+        <h1 class="text-xl font-semibold text-center mb-5">Create Task</h1>
+
+        <form action="{{url_for('tasks.create')}}" method="post">
+
+            <div class="mb-4">
+                <label for="title" class="block mb-1">Title</label>
+                <input name="title" id="title" type="text" placeholder="Enter title..."
+                       class="w-full p-2 rounded-md border border-solid border-gray-300">
+            </div>
+
+            <div class="mb-4">
+                <label for="description" class="block mb-1">Description</label>
+                <input name="description" id="description" type="text" placeholder="Enter description..."
+                       class="w-full p-2 rounded-md border border-solid border-gray-300">
+            </div>
+
+
+            <div class="mb-4">
+                <label for="due_date" class="block mb-1">Due Date</label>
+                <input name="due_date" id="due_date" type="date"
+                       class="w-full p-2 rounded-md border border-solid border-gray-300">
+            </div>
+
+            <div class="mb-4">
+                <label for="status">Status</label>
+                <select name="status" id="status" class="block mb-1">
+                    {%for status in Status%}
+                        <option value="{{status.value}}">
+                            {{STATUS_LABELS[status]}}
+                        </option>
+                    {%endfor%}
+                </select>
+<!--                <label for="due_date" class="block mb-1">Due Date</label>-->
+<!--                <input name="due_date" id="due_date" type="date"-->
+<!--                       class="w-full p-2 rounded-md border border-solid border-gray-300">-->
+            </div>
+
+            <div class="mb-6">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority" class="block mb-1">
+                    {%for priority in Priority%}
+                        <option value="{{priority.value}}">
+                            {{priority.value}}
+                        </option>
+                    {%endfor%}
+                </select>
+<!--                <label for="due_date" class="block mb-1">Due Date</label>-->
+<!--                <input name="due_date" id="due_date" type="date"-->
+<!--                       class="w-full p-2 rounded-md border border-solid border-gray-300">-->
+            </div>
+
+            <button type="submit"
+                    class="w-full text-center bg-blue-500 text-white py-1 rounded-md mb-3 hover:bg-blue-600 transition"
+                    >Submit</button>
+        </form>
+    </div>
+</div>
+
+
+{%endblock%}
