@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import login_required
-
+from flask_login import login_required, current_user
 from app.forms.task_forms import CreateTaskForm
+from app.models.status import STATUS_LABELS
+from app.services.task_service import create_task
+from app.models import Status, Priority
 
 tasks_bp = Blueprint("tasks", __name__)
 
@@ -21,9 +23,25 @@ def create():
         if not form.success:
             for error in form.errors.values():
                 flash(error, "error")
-            return redirect("tasks.create")
+            return redirect(url_for("tasks.create"))
 
-        result = None
+        result = create_task(
+            user_id=current_user.id,
+            title=form.title,
+            description=form.description,
+            due_date=form.due_date,
+            status=form.status,
+            priority=form.priority
+        )
+        if not result.success:
+            for error in result.errors.values():
+                flash(error, "error")
+            return redirect(url_for("tasks.create"))
+
+        flash("task successfully created!", "success")
+        return redirect(url_for("tasks.tasks"))
 
 
-    return redirect(url_for("tasks.tasks"))
+
+
+    return render_template("create.html", STATUS_LABELS=STATUS_LABELS, Status=Status, Priority=Priority)

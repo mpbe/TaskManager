@@ -7,7 +7,7 @@ from app.models.status import Status
 class Task(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user_id", ondelete="CASCADE"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500))
     due_date = db.Column(db.Date, nullable=False)

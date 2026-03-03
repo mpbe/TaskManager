@@ -1,6 +1,7 @@
 from app.forms.base_form import BaseForm
 from app.models.priority import Priority
 from app.models.status import Status
+from app.utils.parse_date import parse_date
 
 
 class CreateTaskForm(BaseForm):
@@ -14,10 +15,10 @@ class CreateTaskForm(BaseForm):
 
         self.description = form.get("description", "").strip()
 
-        # need parse date method for converting to correct format
-        self.due_date = form.get("due_date")
-        if not self.due_date:
-            self.errors["due_date"] = "due date cannot be blank"
+        try:
+            self.due_date = parse_date(form.get("due_date"))
+        except ValueError:
+            self.errors["date"] = "date format is incorrect"
 
         try:
             self.status = Status(form.get("status"))
