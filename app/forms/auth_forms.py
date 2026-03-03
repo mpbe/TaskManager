@@ -56,4 +56,6 @@ class UpdatePasswordForm(BaseForm):
         if not self.confirm_password:
             self.errors["confirm_password"] = "confirm password cannot be blank"
 
+        if self.new_password != self.confirm_password:
+            self.errors["password_match"] = "passwords do not match"
 

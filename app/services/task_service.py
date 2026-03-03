@@ -7,7 +7,7 @@ from app.schema.task_result import CreateTaskResult
 def create_task(user_id: int, title: str, description: str, due_date: date, status: Status, priority: Priority):
 
     result = CreateTaskResult()
-    if len(title) > 100 | len(title) < 4:
+    if len(title) > 100 or len(title) < 4:
         result.errors["title_length"] = "title must be between 4 and 100 characters"
 
     if len(description) > 500:
@@ -15,6 +15,9 @@ def create_task(user_id: int, title: str, description: str, due_date: date, stat
 
     if due_date < date.today():
         result.errors["due_date"] = "due date cannot be in past"
+
+    if not result.success:
+        return result
 
     task = Task(
         user_id= user_id,
