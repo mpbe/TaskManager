@@ -6,5 +6,16 @@
 
 {%block content%}
 <h1>Task List for {{current_user.username}}</h1>
+
+{%for task in tasks%}
+    <p>Title - {{task.title}}</p>
+    <p>Description - {{task.description}}</p>
+    <p>Due Date - {{task.due_date}}</p>
+    <p>Status - {{STATUS_LABELS[task.status]}}</p>
+    <p>Priority - {{task.priority.value}}</p>
+<br>
+{%endfor%}
+
+<a href="{{url_for('tasks.create')}}">Create Task</a>
 <a href="{{url_for('auth.update_password')}}">Update password?</a>
 {%endblock%}

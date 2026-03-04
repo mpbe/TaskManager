@@ -4,6 +4,11 @@ from app.models import Status, Priority, Task
 from app.schema.task_result import CreateTaskResult
 
 
+def get_user_tasks(user_id: int):
+
+    return Task.query.filter_by(user_id=user_id).all()
+
+
 def create_task(user_id: int, title: str, description: str, due_date: date, status: Status, priority: Priority):
 
     result = CreateTaskResult()
