@@ -20,8 +20,11 @@
 
             <div class="mb-4">
                 <label for="description" class="block mb-1">Description</label>
-                <input name="description" id="description" type="text" placeholder="Enter description..."
-                       class="w-full p-2 rounded-md border border-solid border-gray-300">
+                <textarea name="description"
+                          id="description"
+                          rows="4"
+                          class="w-full p-2 rounded-md border border-solid border-gray-300"
+                          placeholder="Enter description..."></textarea>
             </div>
 
 
@@ -33,7 +36,8 @@
 
             <div class="mb-4">
                 <label for="status">Status</label>
-                <select name="status" id="status" class="block mb-1">
+                <select name="status" id="status"
+                        class="w-full p-2 rounded-md border border-gray-300">>
                     {%for status in Status%}
                         <option value="{{status.value}}">
                             {{STATUS_LABELS[status]}}
@@ -44,7 +48,7 @@
 
             <div class="mb-6">
                 <label for="priority">Priority</label>
-                <select name="priority" id="priority" class="block mb-1">
+                <select name="priority" id="priority" class="w-full p-2 rounded-md border border-gray-300">
                     {%for priority in Priority%}
                         <option value="{{priority.value}}">
                             {{priority.value}}
