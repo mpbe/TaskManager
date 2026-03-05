@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
-from app.forms.task_forms import CreateTaskForm
+from app.forms.task_forms import CreateTaskForm, UpdateTaskForm
 from app.models.status import STATUS_LABELS
-from app.services.task_service import create_task, get_user_tasks, delete_task
+from app.services.task_service import create_task, get_user_tasks, delete_task, update_task, get_task_by_id
 from app.models import Status, Priority
 
 tasks_bp = Blueprint("tasks", __name__)
@@ -36,8 +36,8 @@ def create():
             description=form.description,
             due_date=form.due_date,
             status=form.status,
-            priority=form.priority
-        )
+            priority=form.priority)
+
         if not result.success:
             for error in result.errors.values():
                 flash(error, "error")
@@ -47,6 +47,54 @@ def create():
         return redirect(url_for("tasks.tasks"))
 
     return render_template("create.html",
+                           STATUS_LABELS=STATUS_LABELS,
+                           Status=Status,
+                           Priority=Priority)
+
+
+@tasks_bp.route("/update/<int:task_id>", methods=["GET", "POST"])
+@login_required
+def update(task_id: int):
+
+    task = get_task_by_id(task_id)
+
+    if request.method == "POST":
+
+        form = UpdateTaskForm(request.form)
+
+        if not form.success:
+            for error in form.errors.values():
+                flash(error, "error")
+                return render_template("update-task.html",
+                                       task=task,
+                                       STATUS_LABELS=STATUS_LABELS,
+                                       Status=Status,
+                                       Priority=Priority)
+
+        result = update_task(
+            task_id=task_id,
+            user_id=current_user.id,
+            title=form.title,
+            description=form.description,
+            due_date=form.due_date,
+            status=form.status,
+            priority=form.priority
+        )
+
+        if not result.success:
+            for error in result.errors.values():
+                flash(error, "error")
+                return render_template("update-task.html",
+                                       task=task,
+                                       STATUS_LABELS=STATUS_LABELS,
+                                       Status=Status,
+                                       Priority=Priority)
+
+        flash("task successfully updated!", "success")
+        return redirect(url_for("tasks.tasks"))
+
+    return render_template("update-task.html",
+                           task=task,
                            STATUS_LABELS=STATUS_LABELS,
                            Status=Status,
                            Priority=Priority)

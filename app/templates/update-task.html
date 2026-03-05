@@ -1,0 +1,70 @@
+{%extends "base.html"%}
+
+{%block title%}Update Task{%endblock%}
+
+{%include "partials/form_errors.html"%}
+
+{%block content%}
+
+<div class="flex justify-center items-center min-h-[70vh]">
+    <div class="rounded-lg max-w-md bg-white p-8 w-full max-w-md shadow-lg">
+        <h1 class="text-xl font-semibold text-center mb-5">Update Task</h1>
+
+        <form action="{{url_for('tasks.update', task_id=task.id)}}" method="post">
+
+            <div class="mb-4">
+                <label for="title" class="block mb-1">Title</label>
+                <input value="{task.title}}" name="title" id="title" type="text" placeholder="Enter title..."
+                       class="w-full p-2 rounded-md border border-solid border-gray-300">
+            </div>
+
+            <div class="mb-4">
+                <label for="description" class="block mb-1">Description</label>
+                <textarea name="description"
+                          id="description"
+                          rows="4"
+                          class="w-full p-2 rounded-md border border-solid border-gray-300"
+                          placeholder="Enter description...">
+                          {{task.description}}</textarea>
+            </div>
+
+
+            <div class="mb-4">
+                <label for="due_date" class="block mb-1">Due Date</label>
+                <input name="due_date" id="due_date" type="date" value="{{task.due_date.isoformat()}}"
+                       class="w-full p-2 rounded-md border border-solid border-gray-300">
+            </div>
+
+            <div class="mb-4">
+                <label for="status">Status</label>
+                <select name="status" id="status"
+                        class="w-full p-2 rounded-md border border-gray-300">
+                    {%for status in Status%}
+                        <option value="{{status.value}}" {%if status == task.status%}selected{%endif%}>
+                            {{STATUS_LABELS[status]}}
+                        </option>
+                    {%endfor%}
+                </select>
+            </div>
+
+            <div class="mb-6">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority" class="w-full p-2 rounded-md border border-gray-300">
+                    {%for priority in Priority%}
+                        <option value="{{priority.value}}"
+                                {%if priority == task.priority%}selected{%endif%}>
+                            {{priority.value}}
+                        </option>
+                    {%endfor%}
+                </select>
+            </div>
+
+            <button type="submit"
+                    class="w-full text-center bg-blue-500 text-white py-1 rounded-md mb-3 hover:bg-blue-600 transition"
+                    >Submit</button>
+        </form>
+    </div>
+</div>
+
+
+{%endblock%}

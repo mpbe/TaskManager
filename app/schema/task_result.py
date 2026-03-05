@@ -5,7 +5,11 @@ from app.models import Task
 
 @dataclass
 class CreateTaskResult(BaseResult):
+    task: Task | None = None
 
+
+@dataclass
+class UpdateTaskResult(BaseResult):
     task: Task | None = None
 
 
