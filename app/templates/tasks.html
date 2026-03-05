@@ -13,6 +13,12 @@
     <p>Due Date - {{task.due_date}}</p>
     <p>Status - {{STATUS_LABELS[task.status]}}</p>
     <p>Priority - {{task.priority.value}}</p>
+    <form action="{{url_for('tasks.delete', task_id=task.id)}}"
+          method="post"
+          onsubmit="return confirm('Delete task?')">
+        <button type="submit">Delete Task</button>
+    </form>
+<br>
 <br>
 {%endfor%}
 

@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash
 
 """
 seed the database with some default users and tasks by typing the below in the terminal:
+
 python seed.py
 
 there are 2 users:
@@ -54,22 +55,22 @@ with app.app_context():
         )
 
     task3 = Task(
-        title="First task",
-        description="Example task",
-        due_date=date.today() + timedelta(days=7),
-        status=Status.TO_DO,
-        priority=Priority.LOW,
-        user_id=user2.id
-    )
+            title="First task",
+            description="Example task",
+            due_date=date.today() + timedelta(days=7),
+            status=Status.TO_DO,
+            priority=Priority.LOW,
+            user_id=user2.id
+        )
 
     task4 = Task(
-        title="Second task",
-        description="Another task",
-        due_date=date.today() + timedelta(days=3),
-        status=Status.IN_PROGRESS,
-        priority=Priority.HIGH,
-        user_id=user2.id
-    )
+            title="Second task",
+            description="Another task",
+            due_date=date.today() + timedelta(days=3),
+            status=Status.IN_PROGRESS,
+            priority=Priority.HIGH,
+            user_id=user2.id
+        )
 
     db.session.add_all([task1, task2, task3, task4])
     db.session.commit()

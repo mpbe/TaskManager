@@ -7,3 +7,7 @@ from app.models import Task
 class CreateTaskResult(BaseResult):
 
     task: Task | None = None
+
+
+class DeleteTaskResult(BaseResult):
+    pass

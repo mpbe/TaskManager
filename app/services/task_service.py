@@ -1,7 +1,7 @@
 from datetime import date
 from app.extensions import db
 from app.models import Status, Priority, Task
-from app.schema.task_result import CreateTaskResult
+from app.schema.task_result import CreateTaskResult, DeleteTaskResult
 
 
 def get_user_tasks(user_id: int):
@@ -37,3 +37,18 @@ def create_task(user_id: int, title: str, description: str, due_date: date, stat
     db.session.commit()
 
     return CreateTaskResult(task=task)
+
+
+def delete_task(task_id: int, user_id: int):
+
+    task = Task.query.get(task_id)
+
+    if not task:
+        return DeleteTaskResult(errors= {"task is not in database": "error"})
+
+    if task.user_id != user_id:
+        return DeleteTaskResult(errors={"task": "unauthorised"})
+
+    db.session.delete(task)
+    db.session.commit()
+    return DeleteTaskResult()
