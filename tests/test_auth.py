@@ -90,7 +90,7 @@ def test_logout_user_success(client):
         "password": "test"
     })
 
-    response = client.get("/auth/logout", follow_redirects=True)
+    response = client.post("/auth/logout", follow_redirects=True)
     assert b"Login" in response.data
 
 
