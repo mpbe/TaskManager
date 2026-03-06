@@ -2,31 +2,72 @@
 
 {%block title%}Tasks{%endblock%}
 
-<!--{%include "partials/form_errors.html"%}-->
+{%include "partials/form_errors.html"%}
 
 {%block content%}
-<h1>Task List for {{current_user.username}}</h1>
 
-{%for task in tasks%}
-    <p>Title - {{task.title}}</p>
-    <p>Description - {{task.description}}</p>
-    <p>Due Date - {{task.due_date}}</p>
-    <p>Status - {{STATUS_LABELS[task.status]}}</p>
-    <p class="inline">Priority - <p class="{{PRIORITY_COLOURS[task.priority]}} inline" >{{task.priority.value}}</p>
-    <a href="{{url_for('tasks.update', task_id=task.id)}}" class="block">Update Task</a>
-    <form action="{{url_for('tasks.complete', task_id=task.id)}}"
-          method="post"
-          onsubmit="return confirm('Complete task?')">
-        <button type="submit">Complete Task</button>
-    </form>
-    <form action="{{url_for('tasks.delete', task_id=task.id)}}"
-          method="post"
-          onsubmit="return confirm('Delete task?')">
-        <button type="submit">Delete Task</button>
-    </form>
-<br>
-<br>
-{%endfor%}
+<div class="flex justify-center items-center min-h-[60vh]">
+    <div class="w-full max-w-6xl">
 
-<a href="{{url_for('tasks.create')}}">Create Task</a>
+<!--        title and create task button-->
+        <div class="flex justify-between items-center mb-2">
+            <h1 class="text-3xl font-semibold">Tasks</h1>
+            <a href="{{url_for('tasks.create')}}" class="block bg-blue-600 text-white p-2 rounded-lg">Create Task</a>
+        </div>
+
+<!--        tasks for 'user'-->
+        <p class="mb-4">Task List for {{current_user.username}}</p>
+
+<!--        card grid-->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {%for task in tasks%}
+
+<!--            individual card-->
+            <div class="flex flex-col justify-between shadow-lg bg-white rounded-lg p-5 border border-gray-200 space-y-3 md:min-h-[300px]">
+
+<!--                title and description-->
+                <div class="space-y-2">
+                    <div>
+                        <h3 class="text-lg text-center font-semibold mb-2 line-clamp-2">
+                            {{task.title}}</h3>
+                        <p class="text-sm text-gray-500 line-clamp-3">
+                            {{task.description}}</p>
+                    </div>
+
+                    <!--                due date, status and priority-->
+                    <div class="text-sm text-gray-500 space-y-1">
+                        <p><strong>Due Date:</strong> {{task.due_date}}</p>
+                        <p><strong>Status:</strong> {{STATUS_LABELS[task.status]}}</p>
+                        <p><strong>Priority:</strong>
+                            <span class="{{PRIORITY_COLOURS[task.priority]}}">{{task.priority.value}}</span>
+                        </p>
+                    </div>
+                </div>
+
+<!--                update, complete and delete-->
+                <div class="flex flex-col md:justify-around md:flex-row items-center">
+                    <a href="{{url_for('tasks.update', task_id=task.id)}}"
+                       class="block bg-yellow-300 px-5 py-1 rounded-lg border border-solid border-gray-300 hover:bg-yellow-400 transition">Update</a>
+                    <form action="{{url_for('tasks.complete', task_id=task.id)}}"
+                          method="post"
+                          onsubmit="return confirm('Complete task?')">
+                        <button type="submit"
+                                class="bg-green-400 px-5 py-1 rounded-lg border border-solid border-gray-300 hover:bg-green-500 transition"
+                                >Complete</button>
+                    </form>
+                    <form action="{{url_for('tasks.delete', task_id=task.id)}}"
+                          method="post"
+                          onsubmit="return confirm('Delete task?')">
+                        <button type="submit"
+                                class="bg-red-500 sm:px-2 md:px-5 py-1 rounded-lg border border-solid border-gray-300 hover:bg-red-600 transition"
+                                >Delete</button>
+                    </form>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+
+
 {%endblock%}
