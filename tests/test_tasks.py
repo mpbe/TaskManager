@@ -66,3 +66,23 @@ def test_delete_task_success(client):
     response = client.post("/tasks/delete/1", follow_redirects=True)
 
     assert b"successfully deleted" in response.data
+
+
+def test_complete_task_success(client):
+    client.post("/auth/register", data={
+        "username": "test",
+        "email": "test@test.com",
+        "password": "test"
+    })
+
+    client.post("/tasks/create", data={
+        "title": "test",
+        "description": "test",
+        "due_date": (date.today() + timedelta(days=3)).isoformat(),
+        "status": Status.TO_DO.value,
+        "priority": Priority.LOW.value
+    })
+
+    response = client.post("/tasks/complete/1", follow_redirects=True)
+
+    assert b"task completed!" in response.data
