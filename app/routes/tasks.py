@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from app.forms.task_forms import CreateTaskForm, UpdateTaskForm
+from app.models.priority import PRIORITY_COLOURS
 from app.models.status import STATUS_LABELS
 from app.services.task_service import create_task, get_user_tasks, delete_task, update_task, get_task_by_id, \
     complete_task
@@ -16,7 +17,8 @@ def tasks():
                            STATUS_LABELS=STATUS_LABELS,
                            Status=Status,
                            Priority=Priority,
-                           tasks=get_user_tasks(user_id=current_user.id))
+                           tasks=get_user_tasks(user_id=current_user.id),
+                           PRIORITY_COLOURS=PRIORITY_COLOURS)
 
 
 @tasks_bp.route("/create", methods=["GET", "POST"])
