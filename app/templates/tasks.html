@@ -14,6 +14,11 @@
     <p>Status - {{STATUS_LABELS[task.status]}}</p>
     <p>Priority - {{task.priority.value}}</p>
     <a href="{{url_for('tasks.update', task_id=task.id)}}">Update Task</a>
+    <form action="{{url_for('tasks.complete', task_id=task.id)}}"
+          method="post"
+          onsubmit="return confirm('Complete task?')">
+        <button type="submit">Complete Task</button>
+    </form>
     <form action="{{url_for('tasks.delete', task_id=task.id)}}"
           method="post"
           onsubmit="return confirm('Delete task?')">

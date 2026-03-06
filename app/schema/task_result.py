@@ -15,3 +15,7 @@ class UpdateTaskResult(BaseResult):
 
 class DeleteTaskResult(BaseResult):
     pass
+
+
+class CompleteTaskResult(BaseResult):
+    pass
