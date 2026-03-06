@@ -1,0 +1,30 @@
+{%extends "base.html"%}
+
+{%block title%}Account{%endblock%}
+
+{%include "partials/form_errors.html"%}
+
+{%block content%}
+
+<h2>Account options for user {{current_user.username}}</h2>
+
+<a href="{{url_for('auth.update_password')}}" class="hover:text-gray-400">Update password?</a>
+
+<form action="{{url_for('auth.logout')}}"
+      class="hover:text-gray-400"
+      method="post"
+      onsubmit="return confirm('are you sure you want to log out?')">
+      <button>Logout</button>
+</form>
+
+<form action="{{url_for('auth.delete')}}"
+      class="hover:text-gray-400"
+      method="post"
+      onsubmit="return confirm('are you sure you want to delete?')">
+      <button>Delete account</button>
+</form>
+
+{%endblock%}
+
+
+

@@ -35,6 +35,7 @@ def login():
 
     return render_template("login.html")
 
+
 @auth_bp.route("/register", methods = ["GET", "POST"])
 def register():
 
@@ -58,14 +59,15 @@ def register():
 
     return render_template("register.html")
 
-@auth_bp.route("/logout")
+
+@auth_bp.route("/logout", methods=["POST"])
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("auth.login"))
 
 
-@auth_bp.route("/delete")
+@auth_bp.route("/delete", methods=["POST"])
 @login_required
 def delete():
     result = delete_user(current_user.id)
@@ -74,6 +76,7 @@ def delete():
         abort(404)
 
     return redirect(url_for("main.index"))
+
 
 @auth_bp.route("/update-password", methods=["GET", "POST"])
 @login_required
@@ -101,3 +104,10 @@ def update_password():
         return redirect(url_for("tasks.tasks"))
 
     return render_template("update-password.html")
+
+
+@auth_bp.route("/account")
+@login_required
+def account():
+
+    return render_template("account.html")
