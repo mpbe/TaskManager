@@ -102,10 +102,23 @@ def test_update_password_success(client):
         "password": "pass"
     })
 
-    client.post("/auth/update-password", data={
+    response = client.post("/auth/update-password", data={
         "old_password": "pass",
         "new_password": "newpass",
         "confirm_password": "newpass"
     }, follow_redirects=True)
 
-    assert b"successfully updated!"
+    assert b"successfully updated!" in response.data
+
+
+def test_delete_account_success(client):
+
+    client.post("/auth/register", data={
+        "username": "user",
+        "email": "test@test.com",
+        "password": "pass"
+    })
+
+    response = client.post("/auth/delete", follow_redirects=True)
+
+    assert b"account deleted" in response.data

@@ -75,6 +75,7 @@ def delete():
     if not result:
         abort(404)
 
+    flash("account deleted", "success")
     return redirect(url_for("main.index"))
 
 
