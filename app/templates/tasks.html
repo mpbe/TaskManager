@@ -7,7 +7,7 @@
 {%block content%}
 
 <div class="flex justify-center items-center min-h-[60vh]">
-    <div class="w-full max-w-6xl">
+    <div class="w-full max-w-6xl px-4">
 
 <!--        title and create task button-->
         <div class="flex justify-between items-center mb-2">
@@ -19,7 +19,7 @@
         <p class="mb-4">Task List for {{current_user.username}}</p>
 
 <!--        card grid-->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {%for task in tasks%}
 
 <!--            individual card-->
@@ -45,21 +45,22 @@
                 </div>
 
 <!--                update, complete and delete-->
-                <div class="flex flex-col md:justify-around md:flex-row items-center">
+                <div class="flex flex-col md:flex-row gap-2 mt-4">
+<!--                <div class="flex flex-col md:justify-around md:flex-row md:items-center">-->
                     <a href="{{url_for('tasks.update', task_id=task.id)}}"
-                       class="block bg-yellow-300 px-5 py-1 rounded-lg border border-solid border-gray-300 hover:bg-yellow-400 transition">Update</a>
+                       class="bg-yellow-300 text-center px-1 py-1 rounded-lg w-24 border border-solid border-gray-300 hover:bg-yellow-400 transition">Update</a>
                     <form action="{{url_for('tasks.complete', task_id=task.id)}}"
                           method="post"
                           onsubmit="return confirm('Complete task?')">
                         <button type="submit"
-                                class="bg-green-400 px-5 py-1 rounded-lg border border-solid border-gray-300 hover:bg-green-500 transition"
+                                class="bg-green-400 px-1 py-1 w-24 rounded-lg border border-solid border-gray-300 hover:bg-green-500 transition"
                                 >Complete</button>
                     </form>
                     <form action="{{url_for('tasks.delete', task_id=task.id)}}"
                           method="post"
                           onsubmit="return confirm('Delete task?')">
                         <button type="submit"
-                                class="bg-red-500 sm:px-2 md:px-5 py-1 rounded-lg border border-solid border-gray-300 hover:bg-red-600 transition"
+                                class="bg-red-500 px-1 py-1 w-24 rounded-lg border border-solid border-gray-300 hover:bg-red-600 transition"
                                 >Delete</button>
                     </form>
                 </div>
