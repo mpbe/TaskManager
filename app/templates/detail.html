@@ -1,0 +1,49 @@
+{%extends "base.html"%}
+
+{%block title%}Details{%endblock%}
+
+{%include "partials/form_errors.html"%}
+
+{%block content%}
+
+<div class="flex justify-center items-center min-h-[60vh]">
+    <div class="w-full max-w-xl px-4">
+        <div class="flex flex-col justify-between shadow-lg bg-white rounded-lg p-5 border border-gray-200 space-y-3 md:min-h-[300px]">
+            <div class="space-y-2">
+                <h3 class="text-lg text-center font-semibold mb-2">
+                            {{task.title}}</h3>
+                <p class="text-sm text-gray-500">
+                            {{task.description}}</p>
+            </div>
+
+            <div class="text-sm text-gray-500 space-y-1">
+                <p><strong>Due Date: </strong>{{task.due_date}}</p>
+                <p><strong>Status: </strong>{{STATUS_LABELS[task.status]}}</p>
+                <p><strong>Priority: </strong>
+                    <span class="{{PRIORITY_COLOURS[task.priority]}}">{{task.priority.value}}</span>
+                </p>
+            </div>
+
+            <div class="flex flex-row justify-center gap-1 mt-4">
+                <a href="{{url_for('tasks.update', task_id=task.id)}}"
+                       class="bg-yellow-300 text-center px-1 py-1 rounded-lg w-24 border border-solid border-gray-300 hover:bg-yellow-400 transition">Update</a>
+                    <form action="{{url_for('tasks.complete', task_id=task.id)}}"
+                          method="post"
+                          onsubmit="return confirm('Complete task?')">
+                        <button type="submit"
+                                class="bg-green-400 px-1 py-1 w-24 rounded-lg border border-solid border-gray-300 hover:bg-green-500 transition"
+                                >Complete</button>
+                    </form>
+                    <form action="{{url_for('tasks.delete', task_id=task.id)}}"
+                          method="post"
+                          onsubmit="return confirm('Delete task?')">
+                        <button type="submit"
+                                class="bg-red-500 px-1 py-1 w-24 rounded-lg border border-solid border-gray-300 hover:bg-red-600 transition"
+                                >Delete</button>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

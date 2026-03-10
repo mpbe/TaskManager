@@ -130,3 +130,19 @@ def complete(task_id:int):
 
     flash("task completed!", "success")
     return redirect(url_for("tasks.tasks"))
+
+
+@tasks_bp.route("/detail/<int:task_id>")
+@login_required
+def detail(task_id: int):
+
+    task = get_task_by_id(task_id)
+
+    if not task:
+        flash("task does not exist!", "error")
+        return redirect(url_for("tasks.tasks"))
+
+    return render_template("detail.html",
+                           task=task,
+                           STATUS_LABELS=STATUS_LABELS,
+                           PRIORITY_COLOURS=PRIORITY_COLOURS)
