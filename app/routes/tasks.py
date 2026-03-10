@@ -5,7 +5,7 @@ from app.models.priority import PRIORITY_COLOURS
 from app.models.status import STATUS_LABELS
 from app.services.task_service import create_task, get_user_tasks, delete_task, update_task, get_task_by_id, \
     complete_task
-from app.models import Status, Priority
+from app.models import Status, Priority, Task
 
 tasks_bp = Blueprint("tasks", __name__)
 
@@ -13,11 +13,20 @@ tasks_bp = Blueprint("tasks", __name__)
 @login_required
 def tasks():
 
+    search_term = request.args.get("search", "").strip()
+    query = Task.query.filter_by(user_id=current_user.id)
+
+    if search_term:
+        query = query.filter(
+            Task.title.ilike(f"%{search_term}%") |
+            Task.description.ilike(f"%{search_term}%")
+        ).all()
+
     return render_template("tasks.html",
+                           tasks=query,
                            STATUS_LABELS=STATUS_LABELS,
                            Status=Status,
                            Priority=Priority,
-                           tasks=get_user_tasks(user_id=current_user.id),
                            PRIORITY_COLOURS=PRIORITY_COLOURS)
 
 
