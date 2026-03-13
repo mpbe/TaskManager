@@ -162,7 +162,34 @@ with app.app_context():
         user_id=user1.id
     )
 
-    db.session.add_all([task1, task2, task3, task4, task5, task6, task7, task8, task9, task10, task11, task12, task13, task14])
+    task15 = Task(
+        title="Fourth task",
+        description="Another task",
+        due_date=date.today() + timedelta(days=3),
+        status=Status.IN_PROGRESS,
+        priority=Priority.HIGH,
+        user_id=user1.id
+    )
+
+    task16 = Task(
+        title="Fourth task",
+        description="Another task",
+        due_date=date.today() + timedelta(days=3),
+        status=Status.IN_PROGRESS,
+        priority=Priority.HIGH,
+        user_id=user1.id
+    )
+
+    task17 = Task(
+        title="Fourth task",
+        description="Another task",
+        due_date=date.today() + timedelta(days=3),
+        status=Status.IN_PROGRESS,
+        priority=Priority.HIGH,
+        user_id=user1.id
+    )
+
+    db.session.add_all([task1, task2, task3, task4, task5, task6, task7, task8, task9, task10, task11, task12, task13, task14, task15, task16, task17])
     db.session.commit()
 
     print("Database seeded.")

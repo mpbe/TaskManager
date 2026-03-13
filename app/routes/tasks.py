@@ -13,6 +13,7 @@ tasks_bp = Blueprint("tasks", __name__)
 @login_required
 def tasks():
 
+    page = request.args.get("page", 1, type=int)
     search_term = request.args.get("search", "").strip()
     query = Task.query.filter_by(user_id=current_user.id)
 
@@ -20,14 +21,20 @@ def tasks():
         query = query.filter(
             Task.title.ilike(f"%{search_term}%") |
             Task.description.ilike(f"%{search_term}%")
-        ).all()
+        )
+    query = query.order_by(Task.id.asc())
+    pagination = query.paginate(page=page, per_page=6)
+
+    task_list = pagination.items
 
     return render_template("tasks.html",
-                           tasks=query,
+                           tasks=task_list,
                            STATUS_LABELS=STATUS_LABELS,
                            Status=Status,
                            Priority=Priority,
-                           PRIORITY_COLOURS=PRIORITY_COLOURS)
+                           PRIORITY_COLOURS=PRIORITY_COLOURS,
+                           pagination=pagination,
+                           search_term=search_term)
 
 
 @tasks_bp.route("/create", methods=["GET", "POST"])

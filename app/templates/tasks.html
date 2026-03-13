@@ -18,9 +18,10 @@
 <!--        tasks for 'user'-->
         <p class="mb-4">Task List for {{current_user.username}}</p>
 
+<!--        search bar-->
         <form action="{{url_for('tasks.tasks')}}" class="mb-4 max-w-sm">
             <div class="flex gap-4">
-                <input name="search" id="search" placeholder="Search tasks..."
+                <input name="search" id="search" value="{{search_term}}" placeholder="Search tasks..."
                       class="px-2 py-2 shadow-sm border border-gray-300 rounded-md w-full">
                 <button type="submit"
                         class="text-white bg-blue-600 py-2 px-4 rounded-lg hover:bg-blue-700">Search
@@ -28,6 +29,8 @@
             </div>
         </form>
 
+<!--        if tasks exist print the grid, else prompt to add tasks-->
+        {%if tasks%}
 <!--        card grid-->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {%for task in tasks%}
@@ -78,6 +81,27 @@
                 </div>
             </div>
             {%endfor%}
+        </div>
+
+<!--        if no tasks exist, display this instead-->
+        {%else%}
+        <div class="mt-20 space-y-2">
+            <h3 class="text-lg font-semibold">You have no Tasks!</h3>
+            <p>Click the create task button above to add some tasks</p>
+        </div>
+        {%endif%}
+
+<!--        pagination-->
+        <div>
+            {%if pagination.has_prev%}
+            <a href="{{url_for('tasks.tasks', page=pagination.prev_num, search=search_term)}}">Previous</a>
+            {%endif%}
+
+            <span>Page {{pagination.page}} of {{pagination.pages}}</span>
+
+            {%if pagination.has_next%}
+            <a href="{{url_for('tasks.tasks', page=pagination.next_num, search=search_term)}}">Next</a>
+            {%endif%}
         </div>
     </div>
 </div>
