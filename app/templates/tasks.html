@@ -84,6 +84,10 @@
         </div>
 
 <!--        if no tasks exist, display this instead-->
+        {%elif search_term%}
+        <div class="mt-20 space-y-2">
+            <h3 class="text-lg font-semibold">No results</h3>
+        </div>
         {%else%}
         <div class="mt-20 space-y-2">
             <h3 class="text-lg font-semibold">You have no Tasks!</h3>
@@ -92,15 +96,24 @@
         {%endif%}
 
 <!--        pagination-->
-        <div>
+        <div class="flex justify-center gap-5 mt-6">
             {%if pagination.has_prev%}
-            <a href="{{url_for('tasks.tasks', page=pagination.prev_num, search=search_term)}}">Previous</a>
+            <a href="{{url_for('tasks.tasks', page=pagination.prev_num, search=search_term)}}"
+               class="border border-gray-300 rounded-md px-3 py-2 hover:bg-gray-200">Previous</a>
+            {%else%}
+            <a class="border border-gray-300 rounded-md px-3 py-2 hover:bg-gray-200 invisible">Previous</a>
             {%endif%}
 
-            <span>Page {{pagination.page}} of {{pagination.pages}}</span>
+            {%if pagination.pages != 0%}
+            <span class="px-3 py-2">Page {{pagination.page}} of {{pagination.pages}}</span>
+            {%endif%}
 
             {%if pagination.has_next%}
-            <a href="{{url_for('tasks.tasks', page=pagination.next_num, search=search_term)}}">Next</a>
+            <a href="{{url_for('tasks.tasks', page=pagination.next_num, search=search_term)}}"
+               class="border border-gray-300 rounded-md px-3 py-2 hover:bg-gray-200"
+               >Next</a>
+            {%else%}
+            <a class="border border-gray-300 rounded-md px-3 py-2 hover:bg-gray-200 invisible">Next</a>
             {%endif%}
         </div>
     </div>
