@@ -56,6 +56,13 @@ A web application that allows users to create and manage personal tasks through 
 
 ## Installation
 
+### If Using Deployment
+
+Go to `taskmanager-z2r3.onrender.com/`
+
+
+### If Manually Installing:
+
 ### Clone the repository
 
 `git clone https://github.com/mpbe/TaskManager.git`
