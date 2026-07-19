@@ -2,6 +2,10 @@
 
 A web application that allows users to create and manage personal tasks through a simple interface.
 
+## Deployment
+
+https://taskmanager-z2r3.onrender.com/
+
 ## Screenshots
 
 
